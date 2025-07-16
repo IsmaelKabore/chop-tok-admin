@@ -1,18 +1,39 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Box, Typography, useTheme } from '@mui/material';
 
 export interface CardWithIconProps {
-  icon: React.ReactElement;
+  icon: React.ReactNode;
   title: string;
   value: number | string;
+  diff?: string;
 }
 
-export const CardWithIcon: React.FC<CardWithIconProps> = ({ icon, title, value }) => (
-  <Card sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
-    <Box sx={{ mr: 2 }}>{icon}</Box>
-    <CardContent>
-      <Typography variant="subtitle2">{title}</Typography>
-      <Typography variant="h5">{value}</Typography>
-    </CardContent>
-  </Card>
-);
+export const CardWithIcon: React.FC<CardWithIconProps> = ({
+  icon,
+  title,
+  value,
+  diff,
+}) => {
+  const theme = useTheme();
+  return (
+    <Card sx={{ borderRadius: 2, boxShadow: 1, p: 2 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ mr: 2, color: theme.palette.primary.main }}>{icon}</Box>
+        <Box>
+          <Typography variant="subtitle2" color="textSecondary">
+            {title}
+          </Typography>
+          <Typography variant="h5">{value}</Typography>
+          {diff && (
+            <Typography
+              variant="caption"
+              color={diff.startsWith('+') ? 'success.main' : 'error.main'}
+            >
+              {diff}
+            </Typography>
+          )}
+        </Box>
+      </Box>
+    </Card>
+  );
+};

@@ -8,14 +8,21 @@ export const PendingOrders: React.FC = () => {
   const [pending, setPending] = React.useState(0);
 
   React.useEffect(() => {
-    dataProvider.getList('orders', {
-      filter: { status: 'pending' },
-      pagination: { page: 1, perPage: 1 },
-      sort: { field: 'id', order: 'ASC' },
-    })
-    .then(({ total }) => setPending(total))
-    .catch(() => {});
+    dataProvider
+      .getList('orders', {
+        filter: { status: 'pending' },
+        pagination: { page: 1, perPage: 1 },
+        sort: { field: 'id', order: 'ASC' },
+      })
+      .then(({ total }) => setPending(total))
+      .catch(() => {});
   }, [dataProvider]);
 
-  return <CardWithIcon icon={<HourglassEmptyIcon />} title="Pending Orders" value={pending} />;
+  return (
+    <CardWithIcon
+      icon={<HourglassEmptyIcon />}
+      title="Pending Orders"
+      value={pending}
+    />
+  );
 };

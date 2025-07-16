@@ -1,18 +1,29 @@
-import React from 'react';
-import {
-  Edit, SimpleForm, TextInput, NumberInput, FileInput, FileField, required
-} from 'react-admin';
+// src/products/ProductEdit.tsx
+import { Edit, SimpleForm, TextInput, NumberInput, required } from 'react-admin';
+import { VideoUploadInput } from '../components/VideoUploadInput';
+import { Box } from '@mui/material';
 
 export const ProductEdit: React.FC = props => (
   <Edit {...props} title="Edit Dish">
-    <SimpleForm>
-      <TextInput source="name" fullWidth validate={required()} />
-      <TextInput source="description" multiline fullWidth />
-      <NumberInput source="price" validate={required()} />
-      <TextInput source="ingredients_option" label="Ingredients (comma-sep)" />
-      <FileInput source="video" label="Change Video" accept={{ 'video/*': [] }}>
-        <FileField source="src" title="title" />
-      </FileInput>
+    <SimpleForm
+      sx={{ '& .MuiFormControl-root': { mb: 2 } }}
+    >
+      <TextInput source="name" label="Dish Name" fullWidth validate={required()} />
+      <TextInput source="description" label="Description" multiline fullWidth />
+      <NumberInput
+        source="price"
+        label="Price (USD)"
+        fullWidth
+        validate={required()}
+      />
+      <TextInput
+        source="ingredients_option"
+        label="Ingredients (comma-separated)"
+        fullWidth
+      />
+      <Box mt={1}>
+        <VideoUploadInput source="video" label="Upload Video" />
+      </Box>
     </SimpleForm>
   </Edit>
 );

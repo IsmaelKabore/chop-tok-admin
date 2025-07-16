@@ -8,14 +8,21 @@ export const NbNewOrders: React.FC = () => {
   const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
-    dataProvider.getList('orders', {
-      filter: {},
-      pagination: { page: 1, perPage: 1 },
-      sort: { field: 'id', order: 'ASC' },
-    })
-    .then(({ total }) => setCount(total))
-    .catch(() => {});
+    dataProvider
+      .getList('orders', {
+        filter: {},
+        pagination: { page: 1, perPage: 1 },
+        sort: { field: 'id', order: 'ASC' },
+      })
+      .then(({ total }) => setCount(total))
+      .catch(() => {});
   }, [dataProvider]);
 
-  return <CardWithIcon icon={<ShoppingCartIcon />} title="Total Orders" value={count} />;
+  return (
+    <CardWithIcon
+      icon={<ShoppingCartIcon />}
+      title="Total Orders"
+      value={count}
+    />
+  );
 };

@@ -10,17 +10,24 @@ export const MonthlyRevenue: React.FC = () => {
   React.useEffect(() => {
     const now = new Date();
     const start = new Date(now.getFullYear(), now.getMonth(), 1);
-    dataProvider.getList('orders', {
-      filter: { date_gte: start.toISOString(), status: 'completed' },
-      pagination: { page: 1, perPage: 1000 },
-      sort: { field: 'date', order: 'ASC' },
-    })
-    .then(({ data }) => {
-      const sum = data.reduce((acc: any, o: any) => acc + (o.total || 0), 0);
-      setRevenue(sum);
-    })
-    .catch(() => {});
+    dataProvider
+      .getList('orders', {
+        filter: { date_gte: start.toISOString(), status: 'completed' },
+        pagination: { page: 1, perPage: 1000 },
+        sort: { field: 'date', order: 'ASC' },
+      })
+      .then(({ data }) => {
+        const sum = data.reduce((acc: any, o: any) => acc + (o.total || 0), 0);
+        setRevenue(sum);
+      })
+      .catch(() => {});
   }, [dataProvider]);
 
-  return <CardWithIcon icon={<AttachMoneyIcon />} title="This Month Revenue" value={`$${revenue.toFixed(2)}`} />;
+  return (
+    <CardWithIcon
+      icon={<AttachMoneyIcon />}
+      title="This Month’s Revenue"
+      value={`$${revenue.toFixed(2)}`}
+    />
+  );
 };
